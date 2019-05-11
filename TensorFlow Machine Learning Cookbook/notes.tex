@@ -1,0 +1,168 @@
+% Notes for the book
+% TensorFlow Machine Learning Cookbook - Second Edition
+% by Nick McClure
+% Publisher: Packt Publishing
+% Release Date: August 2018
+% ISBN: 9781789131680
+
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,graphicx}
+
+% solve floating problem
+\usepackage{float}
+\usepackage{subcaption}
+
+% solve long url problem
+\usepackage{url}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\thelecnum-\arabic{page}}
+\renewcommand{\thesection}{\thelecnum.\arabic{section}}
+\renewcommand{\theequation}{\thelecnum.\arabic{equation}}
+\renewcommand{\thefigure}{\thelecnum.\arabic{figure}}
+\renewcommand{\thetable}{\thelecnum.\arabic{table}}
+
+%
+% The following macro is used to generate the header.
+%
+\newcommand{\ChapterCMD}[4]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \setcounter{lecnum}{#1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{
+        \vspace{2mm}
+        \hbox to 6.28in { {\bf TensorFlow Machine Learning Cookbook \hfill Spring 2019} }
+        \vspace{10mm}
+        \hbox to 6.28in { {\Large \hfill Chapter #1: #2  \hfill} }
+        \vspace{10mm}
+        \hbox to 6.28in { {\it Scribe: #3 \hfill Date: #4} }
+        \vspace{2mm}
+      }
+   }
+   \end{center}
+   \markboth{ChapterCMD #1: #2}{ChapterCMD #1: #2}
+
+   \hfill
+
+   {\bf Disclaimer}: {\it These notes have been subjected to the
+   usual scrutiny reserved for formal publications.}
+   \vspace*{4mm}
+}
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+% **** IF YOU WANT TO DEFINE ADDITIONAL MACROS FOR YOURSELF, PUT THEM HERE:
+
+\newcommand\E{\mathbb{E}}
+
+\begin{document}
+%FILL IN THE RIGHT INFO.
+%\ChapterCMD{**ChapterCMD-NUMBER**}{**DATE**}{**ChapterCMDR**}{**SCRIBE**}
+\ChapterCMD{1}{Getting Started with TensorFlow}{Roderick Karlemstrand}{11 May 2019}
+
+
+
+
+% **** YOUR NOTES GO HERE:
+
+% Some general latex examples and examples making use of the
+% macros follow.
+%**** IN GENERAL, BE BRIEF. LONG SCRIBE NOTES, NO MATTER HOW WELL WRITTEN,
+%**** ARE NEVER READ BY ANYBODY.
+
+\section{Activation Functions}
+
+The activation functions live in the neural network (nn) library in TensorFlow.
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{images/d2167d3b-96f9-46d1-87c4-79d0839b3745.png}
+        \caption{Sigmoid, hyperbolic tangent, and softsign act func}
+    \end{subfigure}
+    \qquad
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{images/2a1256eb-1993-4e62-a561-48577ebcfec2.png}
+        \caption{Softplus, ReLU, ReLU6, and exponential LU}
+    \end{subfigure}
+    \caption{Some Act Funcs}
+\end{figure}
+
+
+\begin{enumerate}
+\item The rectified linear unit, known as ReLU, is the most common and basic way to introduce non-linearity into neural networks. This function is just called max(0,x). It is continuous, but not smooth.
+
+\item To cap the linearly increasing part of the preceding ReLU activation function. Do this by nesting the max(0,x) function into a min() function, called the ReLU6 function.
+
+It is computationally faster, and does not suffer from vanishing (infinitesimally near zero) or exploding values.
+
+\item Sigmoid, most common continuous and smooth activation function. Not used very often because of its tendency to zero-out the backpropagation terms during training.
+
+\item Softplus function, is a smooth version of the ReLU function.
+\end{enumerate}
+
+
+
+Some TensorFlow resources:
+\begin{itemize}
+\item A public Docker container that is kept current by TensorFlow is available on Dockerhub at \url{https://hub.docker.com/r/tensorflow/tensorflow/}
+
+\item TensorFlow has also made a site where you can visually explore training a neural network while changing the parameters and datasets. Visit \url{http://playground.tensorflow.org/} to explore how different settings affect the training of neural networks.
+
+
+\end{itemize}
+
+
+\end{document}
