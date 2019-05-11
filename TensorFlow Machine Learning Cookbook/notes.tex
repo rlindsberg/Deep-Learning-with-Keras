@@ -104,11 +104,42 @@
 
 \newcommand\E{\mathbb{E}}
 
+
+
+% insert cover page
+\usepackage{eso-pic}
+\newcommand\BackgroundPic{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight, keepaspectratio]{images/cover.png}
+\vfill
+}}}
+
+\AddToShipoutPicture*{\BackgroundPic} % end cover image
+
+
 \begin{document}
+
+% the cover
+\begin{titlepage}
+
+\vspace*{\baselineskip}
+
+% \AddToShipoutPictureBG*{
+%     \AtPageLowerLeft{
+%         \includegraphics[width=1.0\paperwidth]{images/cover}%
+%     }
+% }
+
+\end{titlepage}
+
+
+
 %FILL IN THE RIGHT INFO.
 %\ChapterCMD{**ChapterCMD-NUMBER**}{**DATE**}{**ChapterCMDR**}{**SCRIBE**}
 \ChapterCMD{1}{Getting Started with TensorFlow}{Roderick Karlemstrand}{11 May 2019}
-
 
 
 
@@ -165,4 +196,25 @@ Some TensorFlow resources:
 \end{itemize}
 
 
+\ChapterCMD{2}{The TensorFlow Way}{Roderick Karlemstrand}{11 May 2019}
+
+This chapter will cover:
+
+\begin{itemize}
+\item Operations in a computational graph
+\item Layering nested operations
+\item Working with multiple layers
+\item Implementing loss functions
+\item Implementing backpropagation
+\item Working with batch and stochastic training
+\item Combining everything together
+\item Evaluating models
+\end{itemize}
+
+\section{Working with multiple layers}
+About how to best connect various layers, including custom layers. The data we will generate and use will be representative of small random images.
+
+The first layer we will explore is called a moving window. We will perform a small moving window average across a 2D image and then the second layer will be a custom operation layer.
+
+In this section, we will see that the computational graph can get large and hard to look at. To address this, we will also introduce ways to name operations and create scopes for layers. 
 \end{document}
