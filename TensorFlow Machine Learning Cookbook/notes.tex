@@ -309,4 +309,64 @@ In this section, we will see that the computational graph can get large and hard
   \caption{Computational graph with two layers}
 \end{figure}
 
+
+\section{Implementing loss functions}
+
+First, we will talk about loss functions for regression, which means predicting a continuous dependent variable.
+
+The L2 norm loss is also known as the Euclidean loss function. It is just the square of the distance to the target. The L2 norm is a great loss function because it is very curved near the target and algorithms can use this fact to converge to the target more slowly the closer it gets to zero.
+
+The L1 norm loss is also known as the absolute loss function. Instead of squaring the difference, we take the absolute value.  The L1 norm is better for outliers than the L2 norm because it is not as steep for larger values. One issue to be aware of is that the L1 norm is not smooth at the target, and this can result in algorithms not converging well.
+
+\section{Backprop}
+For a recap and explanation, for both examples we did the following:
+
+\begin{enumerate}
+\item Created the data. Both examples needed to load data through a placeholder.
+
+\item Initialized placeholders and variables. These were very similar placeholders for the data. The variables were very similar, they both had a multiplicative matrix, A, but the first classification algorithm had a bias term to find the split in the data.
+
+\item Created a loss function, we used the L2 loss for regression and the cross-entropy loss for classification.
+
+
+\item Defined an optimization algorithm. Both algorithms used gradient descent.
+
+\item Iterated across random data samples to iteratively update our variables.
+\end{enumerate}
+
+
+Learning rate size.. See Section "There's more..." in the book
+
+Ideally, we would like to take larger steps for smaller moving variables and shorter steps for faster changing variables. We will not go into the mathematics of this approach, but a common implementation of this idea is called the Adagrad algorithm.
+
+Adagrad forces the gradients to zero too soon because it takes into account the whole history. A solution to this is to limit how many steps we use. Doing this is called the Adadelta algorithm.
+
+\section{Working with batch and stochastic training}
+Operating on \textbf{one} training example can make for a very \textbf{erratic} learning process, while using \textbf{too large} a batch can be \textbf{computationally expensive}. Choosing the right type of training is crucial for getting our machine learning algorithms to converge to a solution.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{images/06_Back_Propagation.png}
+  \caption{Stochastic loss and batch loss (batch size = 20) plotted over 100 iterations.}
+\end{figure}
+
+
+Note that the batch loss is much smoother and the stochastic loss is much more erratic.
+
+\section{\colorbox{yellow}{Evaluating models}}
+After training an algorithm in TensorFlow, we must be able to evaluate the model's predictions to determine how well it did.
+
+Using TensorFlow, we must build this feature (Evaluating models) into the computational graph and call it while our model is training and/or after it has finished training.
+
+Evaluating models during training gives us an insight into the algorithm and may give us hints to \textbf{debug it, improve it, or change models entirely.} While evaluation during training isn't always necessary.
+
+After training, we need to \textbf{quantify} how the model performs on the data.
+
+\noindent\colorbox{yellow}
+{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\textbf{Another important aspect of any model we want to evaluate is if it is a regression or classification model.}}}
+
+\textbf{Regression models attempt to predict a continuous number.} The target is not a category, but a desired number. To evaluate these regression predictions against the actual targets, we need an aggregate measure of the distance between the two. Most of the time, a meaningful loss function will satisfy these criteria. This recipe shows you how to change the simple regression algorithm from before into printing out the loss in the training loop and evaluating the loss at the end. For an example, we will revisit and rewrite our regression example in the prior Implementing back propagation recipe in this chapter.
+
+\textbf{Classification models predict a category based on numerical inputs.} The actual targets are a sequence of 1s and 0s, and we must have a measure of how close we are to the truth from our predictions. The loss function for classification models usually isn't that helpful in interpreting how well our model is doing. Usually, we want some sort of classification accuracy, which is commonly the percentage of correctly predicted categories. For this example, we will use the classification example from the prior Implementing back propagation recipe in this chapter.
+
 \end{document}
